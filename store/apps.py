@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
-
-class ShareConfig(AppConfig):
-    name = 'share'
+class StoreConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'store'   # ✅ correct app name
