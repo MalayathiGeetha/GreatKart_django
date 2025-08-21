@@ -20,11 +20,12 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '^++z1s^1&7-(s6r(sm3+d8!g9iv3&ht78qon5@=(o#62co^1v-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = config('SECRET_KEY')
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
@@ -49,6 +50,8 @@ INSTALLED_APPS = [
     'store',
     'carts',
     'orders',
+    'admin_honeypot',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -152,11 +155,11 @@ MESSAGE_TAGS = {
 
 
 # SMTP configuration
-EMAIL_HOST = 'smtp.gmail.com'  #config('EMAIL_HOST')
-EMAIL_PORT = 587 # config('EMAIL_PORT', cast=int)
-EMAIL_HOST_USER = 'malayathigeetha@gmail.com'  #config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = 'jzme rnvt cfjk wmxn' #config('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = True # config('EMAIL_USE_TLS', cast=bool)
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 
 
 
