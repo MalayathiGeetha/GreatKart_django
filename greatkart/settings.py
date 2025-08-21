@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 
+from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
@@ -25,7 +26,12 @@ SECRET_KEY = '^++z1s^1&7-(s6r(sm3+d8!g9iv3&ht78qon5@=(o#62co^1v-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1',
+    'http://localhost',
+]
 
 
 # Application definition
@@ -37,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_session_timeout',
     'category',
     'accounts',
     'store',
@@ -52,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
 ]
 
 ROOT_URLCONF = 'greatkart.urls'
@@ -73,6 +81,11 @@ TEMPLATES = [
         },
     },
 ]
+
+SESSION_EXPIRE_SECONDS = 3600  # 1 hour
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+SESSION_TIMEOUT_REDIRECT = 'accounts/login'
+
 
 WSGI_APPLICATION = 'greatkart.wsgi.application'
 AUTH_USER_MODEL='accounts.Account'
@@ -131,3 +144,20 @@ STATICFILES_DIRS=['greatkart/static',]
 
 MEDIA_URL='/media/'
 MEDIA_ROOT=BASE_DIR /'media'
+
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
+
+
+# SMTP configuration
+EMAIL_HOST = 'smtp.gmail.com'  #config('EMAIL_HOST')
+EMAIL_PORT = 587 # config('EMAIL_PORT', cast=int)
+EMAIL_HOST_USER = 'malayathigeetha@gmail.com'  #config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = 'jzme rnvt cfjk wmxn' #config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True # config('EMAIL_USE_TLS', cast=bool)
+
+
+
+#EH4krbmVDp48iC4PYhlfCdnUuArb_CSkKz6B3-3_XJt52C2Q-O4C3yxz6yEmYQNML4M26k9NhLzqS1am
